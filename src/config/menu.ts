@@ -11,13 +11,26 @@ interface NavItem {
 }
 
 interface NavItemWithChildren extends NavItem {
-    items: NavItemWithChildren[]
+    items?: NavItemWithChildren[]
 }
 
-export const mainMenu: NavItem[] = [
+export const mainMenu: NavItemWithChildren[] = [
     {
         title: 'Dashboard',
         to: '',
+    },
+    {
+        title: 'Dropdown',
+        items: [
+            {
+                title: 'Sample',
+                to: '/sample',
+            },
+            {
+                title: 'Sample Dua',
+                to: '/#',
+            },
+        ]
     },
     {
         title: 'Empty',
