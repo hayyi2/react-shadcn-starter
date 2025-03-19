@@ -1,29 +1,21 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, ReactNode, use, useEffect, useState } from "react"
 
-type ThemeProviderProps = {
-    children: React.ReactNode
-    defaultTheme?: string
-    storageKey?: string
-}
-
-export type ThemeProviderState = {
+type ThemeType = {
     theme: string
     setTheme: (theme: string) => void
 }
 
-const initialState = {
-    theme: "system",
-    setTheme: () => null,
-}
-
-export const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+export const ThemeContext = createContext<ThemeType | null>(null)
 
 export function ThemeProvider({
     children,
     defaultTheme = "system",
     storageKey = "shadcn-ui-theme",
-    ...props
-}: ThemeProviderProps) {
+}: {
+    children: ReactNode
+    defaultTheme?: string
+    storageKey?: string
+}) {
     const [theme, setTheme] = useState(
         () => localStorage.getItem(storageKey) ?? defaultTheme
     )
@@ -47,14 +39,25 @@ export function ThemeProvider({
     }, [theme])
 
     return (
-        <ThemeProviderContext.Provider {...props} value={{
-            theme,
-            setTheme: (theme: string) => {
-                localStorage.setItem(storageKey, theme)
-                setTheme(theme)
-            },
-        }}>
+        <ThemeContext
+            value={{
+                theme,
+                setTheme: (theme: string) => {
+                    localStorage.setItem(storageKey, theme)
+                    setTheme(theme)
+                },
+            }}>
             {children}
-        </ThemeProviderContext.Provider>
+        </ThemeContext>
     )
+}
+
+export function useTheme(): ThemeType {
+    const context = use(ThemeContext)
+
+    if (context === null) {
+        throw new Error("useTheme must be used within a ThemeProvider")
+    }
+
+    return context
 }

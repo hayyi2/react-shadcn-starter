@@ -1,5 +1,3 @@
-import Balance from "react-wrap-balancer"
-
 import { cn } from "@/lib/utils"
 
 function PageHeader({
@@ -10,11 +8,10 @@ function PageHeader({
   return (
     <section
       className={cn(
-        "pt-6 pb-4 flex items-center justify-between space-y-2",
+        "pt-6 pb-4 space-y-2",
         className
       )}
-      {...props}
-    >
+      {...props}>
       {children}
     </section>
   )
@@ -27,7 +24,7 @@ function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        "text-3xl font-semibold tracking-tight my-1",
+        "text-xl font-semibold leading-tight tracking-tight my-1",
         className
       )}
       {...props}
@@ -40,9 +37,9 @@ function PageHeaderDescription({
   ...props
 }: React.HTMLAttributes<HTMLParagraphElement>) {
   return (
-    <Balance
+    <p
       className={cn(
-        "max-w-[750px] text-lg text-muted-foreground sm:text-xl",
+        "max-w-2xl text-base font-light text-muted-foreground",
         className
       )}
       {...props}
@@ -50,4 +47,4 @@ function PageHeaderDescription({
   )
 }
 
-export { PageHeader, PageHeaderHeading, PageHeaderDescription }
+export { PageHeader, PageHeaderDescription, PageHeaderHeading }

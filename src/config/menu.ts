@@ -1,41 +1,43 @@
-import { Icons } from "@/components/icons"
+import {
+    CircleAlert,
+    Files,
+    Gauge,
+    LucideIcon
+} from 'lucide-react'
 
-interface NavItem {
+type MenuItemType = {
     title: string
-    to?: string
-    href?: string
-    disabled?: boolean
-    external?: boolean
-    icon?: keyof typeof Icons
-    label?: string
+    url: string
+    external?: string
+    icon?: LucideIcon
+    items?: MenuItemType[]
 }
+type MenuType = MenuItemType[]
 
-interface NavItemWithChildren extends NavItem {
-    items?: NavItemWithChildren[]
-}
-
-export const mainMenu: NavItemWithChildren[] = [
+export const mainMenu: MenuType = [
     {
         title: 'Dashboard',
-        to: '',
+        url: '/',
+        icon: Gauge
     },
     {
-        title: 'Dropdown',
+        title: 'Pages',
+        url: '/pages',
+        icon: Files,
         items: [
             {
-                title: 'Sample',
-                to: '/sample',
+                title: 'Sample Page',
+                url: '/pages/sample',
             },
             {
-                title: 'Sample Dua',
-                to: '/#',
+                title: 'Coming Soon',
+                url: '/pages/feature',
             },
         ]
     },
     {
-        title: 'Empty',
-        to: 'empty',
+        title: 'Error',
+        url: '/404',
+        icon: CircleAlert,
     },
 ]
-
-export const sideMenu: NavItemWithChildren[] = []
